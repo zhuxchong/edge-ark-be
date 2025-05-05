@@ -7,7 +7,7 @@ exports.searchFixtures = async (req, res) => {
     const results = await Fixture.find({
       $or: [{ home_team: regex }, { away_team: regex }],
     })
-      .limit(50)
+      .limit(100) //pagination???
       .lean();
     res.json(results);
   } catch (err) {

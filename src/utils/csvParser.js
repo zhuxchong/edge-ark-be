@@ -52,17 +52,21 @@ function parseAndSaveCSV(filePath) {
               console.log("row", row, fld, i);
 
               cleanup();
-              return reject(
-                new Error(`Row ${i + 1} : Missing params "${fld}"`)
-              );
+              const err = new Error(`Row ${i + 1}: Missing params "${fld}"`);
+              err.statusCode = 400;
+              err.errorCode = 10000;
+              return reject(err);
             }
           }
 
           if (isNaN(Date.parse(row.fixture_datetime))) {
             cleanup();
-            return reject(
-              new Error(`Row ${i + 1} :Date format "${row.fixture_datetime}"`)
+            const err = new Error(
+              `Row ${i + 1}: Invalid date "${row.fixture_datetime}"`
             );
+            err.statusCode = 400;
+            err.errorCode = 10001;
+            return reject(err);
           }
         }
 

@@ -4,5 +4,5 @@ const { uploadCSV } = require("../controllers/uploadController");
 const upload = multer({ dest: "uploads/" });
 const router = express.Router();
 
-router.post("/", upload.single("file"), uploadCSV);
+router.post("/", upload.single("file"), uploadCSV); //nice to have upload to S3
 module.exports = router;

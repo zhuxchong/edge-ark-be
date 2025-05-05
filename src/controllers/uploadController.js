@@ -6,7 +6,10 @@ exports.uploadCSV = async (req, res) => {
     await parseAndSaveCSV(req.file.path);
     res.json({ success: true });
   } catch (err) {
-    console.log(err);
-    res.status(500).json({ error: err || "CSV import failed" });
+    const status = err.statusCode || 500;
+    return res.status(status).json({
+      error: err.message || "CSV import failed",
+      errCode: err.errorCode,
+    });
   }
 };
